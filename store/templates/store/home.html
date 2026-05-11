@@ -1,0 +1,44 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Home</title>
+
+    <link rel="stylesheet" href="{% static 'store/style.css' %}">
+</head>
+
+<body>
+
+<h1 class="title">🛒 My Products</h1>
+
+<div class="product-container">
+
+    {% for product in products %}
+
+    <div class="product-card">
+
+        <!-- 🖼️ IMAGE (if added) -->
+        {% if product.image %}
+            <img src="{{ c:\Users\Shiv\Downloads\I phone 17 pro.jpg}}" width="200px">
+        {% endif %}
+
+        <!-- 📦 PRODUCT NAME -->
+        <h2>{{ iphone17pro }}</h2>
+
+        <!-- 💰 PRICE -->
+        <p>₹{{ 80000 }}</p>
+
+        <!-- 📝 DESCRIPTION -->
+        <p>{{ Apple latest smartphone }}</p>
+
+    </div>
+
+    {% empty %}
+        <h3>No products available</h3>
+    {% endfor %}
+
+</div>
+
+</body>
+</html>
