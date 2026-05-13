@@ -1,0 +1,61 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Social Media</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="header">📱 Social Media App</div>
+
+    <!-- 📝 CREATE POST -->
+    <div class="post-box">
+        <form method="POST" action="/post/" enctype="multipart/form-data">
+            {% csrf_token %}
+            <textarea name="content" placeholder="What's on your mind?"></textarea>
+            <br><br>
+            <input type="file" name="image">
+            <br><br>
+            <button type="submit">Post</button>
+        </form>
+    </div>
+
+    <!-- 🖼️ POSTS -->
+    {% for post in posts %}
+        <div class="post">
+            <h4>{{ post.user.username }}</h4>
+            <p>{{ post.content }}</p>
+
+            {% if post.image %}
+                <img src="{{ post.image.url }}">
+            {% endif %}
+
+            <!-- ❤️ LIKE -->
+            <div class="actions">
+                <a href="/like/{{ post.id }}/">❤️ Like</a>
+            </div>
+
+            <!-- 💬 COMMENTS -->
+            <div class="comment-box">
+                <form method="POST" action="/comment/{{ post.id }}/">
+                    {% csrf_token %}
+                    <input type="text" name="text" placeholder="Write a comment...">
+                </form>
+
+                <!-- Show comments -->
+                {% for comment in post.comment_set.all %}
+                    <p><b>{{ comment.user.username }}</b>: {{ comment.text }}</p>
+                {% endfor %}
+            </div>
+
+        </div>
+    {% endfor %}
+
+</div>
+
+</body>
+</html>
